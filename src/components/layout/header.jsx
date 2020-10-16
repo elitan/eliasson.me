@@ -10,8 +10,8 @@ export function Header() {
       <a className="px-8" href="https://twitter.com/elitasson">
         Twitter
       </a>
-      <a className="px-8" href="https://twitter.com/elitasson">
-        Home
+      <a className="px-8" href="https://github.com/elitan">
+        Github
       </a>
     </div>
   );
