@@ -44,10 +44,11 @@ export default function BlogLayout({ children, frontMatter }) {
 
       <div className="container mx-auto prose">{children}</div>
 
-      <div className="w-full border-t my-6" />
-      <div className="conatinaer mx-auto prose mb-6">
-        Like blog posts like this? You shuold{" "}
-        <a href={`https://twitter.com/${twitter}`}>follow me on Twitter</a>.
+      <div className="w-full border-t my-12" />
+      <div className="conatinaer mx-auto prose mb-12">
+        Did you like this? You should{" "}
+        <a href={`https://twitter.com/${twitter}`}>follow me on Twitter</a>{" "}
+        where I write about programming and entreprenureship.
       </div>
 
       <div className="flex items-center justify-center mb-32">
