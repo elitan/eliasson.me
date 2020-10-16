@@ -5,11 +5,28 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "refresh": "rm -rf .next/cache/next-babel-loader"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.18",
+    "@next/mdx": "^9.5.5",
+    "babel-plugin-import-glob-array": "^0.2.0",
+    "mdx-prism": "^0.3.1",
     "next": "9.5.5",
+    "next-mdx-enhanced": "^4.0.0",
+    "next-seo": "^4.11.0",
     "react": "16.14.0",
-    "react-dom": "16.14.0"
+    "react-dom": "16.14.0",
+    "react-medium-image-zoom": "^4.3.1",
+    "rehype": "^11.0.0",
+    "remark-code-titles": "^0.1.1",
+    "remark-unwrap-images": "^2.0.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
+    "@tailwindcss/typography": "^0.2.0",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^1.9.2"
   }
 }
