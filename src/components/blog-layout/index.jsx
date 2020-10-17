@@ -25,21 +25,18 @@ export default function BlogLayout({ children, frontMatter }) {
           url: `https://eliasson.me/blog${slug}`,
           title: title,
           description: description,
-          images: [{ url: `https://eliasson.me${frontMatter.image}` }],
+          description: description,
+          images: [{ url: `https://eliasson.me${image}` }],
         }}
       />
       <Header />
       <div className="container mx-auto" style={{ fontSize: "110%" }}>
-        <div className="text-center text-gray-600">
-          {frontMatter.publishedAt}
-        </div>
-        <h1 className="text-4xl font-bold text-center py-4">
-          {frontMatter.title}
-        </h1>
+        <div className="text-center text-gray-700">{publishedAt}</div>
+        <h1 className="text-4xl font-bold text-center py-4">{title}</h1>
       </div>
 
       <div className="w-full flex justify-center py-12">
-        <img src={frontMatter.image} />
+        <img src={image} alt={title} />
       </div>
 
       <div className="container mx-auto prose">{children}</div>
@@ -58,11 +55,9 @@ export default function BlogLayout({ children, frontMatter }) {
           alt={`${twitter}'s avatar on Twitter`}
         />
         <div className="ml-6">
-          <div className="m-0">{frontMatter.author}</div>
+          <div className="m-0">{author}</div>
           <div className="m-0 text-indigo-400">
-            <a href={`https://twitter.com/${twitter}`}>
-              @{frontMatter.twitter}
-            </a>
+            <a href={`https://twitter.com/${twitter}`}>@{twitter}</a>
           </div>
         </div>
       </div>
