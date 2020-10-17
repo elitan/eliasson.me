@@ -39,10 +39,10 @@ export default function BlogLayout({ children, frontMatter }) {
         <img src={image} alt={title} />
       </div>
 
-      <div className="container mx-auto prose">{children}</div>
+      <div className="container mx-auto prose px-4">{children}</div>
 
       <div className="w-full border-t my-12" />
-      <div className="conatinaer mx-auto prose mb-12">
+      <div className="conatinaer mx-auto prose px-4 mb-12">
         Did you like this? You should{" "}
         <a href={`https://twitter.com/${twitter}`}>follow me on Twitter</a>{" "}
         where I write about programming and entreprenureship.
