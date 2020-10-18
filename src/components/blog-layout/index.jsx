@@ -21,12 +21,21 @@ export default function BlogLayout({ children, frontMatter }) {
       <NextSeo
         title={title}
         description={description}
+        canonical={`https://eliasson.me/blog${slug}`}
+        twitter={{
+          title: title,
+          description: description,
+          cardType: "summary_large_image",
+          image: `https://eliasson.me${image}`,
+          site: "elitasson",
+          handle: twitter,
+        }}
         openGraph={{
           url: `https://eliasson.me/blog${slug}`,
           title: title,
           description: description,
-          description: description,
-          images: [{ url: `https://eliasson.me${image}` }],
+          images: [{ url: `https://eliasson.me${image}`, alt: title }],
+          site_name: "Johan Eliasson",
         }}
       />
       <Header />

@@ -9,7 +9,9 @@ export default function Home() {
   );
   return (
     <Layout>
-      <div className="py-10">Hi! I'm Johan.</div>
+      <div className="py-10">
+        Hi! I'm Johan, founder of <a href="https://nhost.io">Nhost</a>.
+      </div>
 
       <div className="text-xl font-semibold">Blog posts</div>
       <div className="">

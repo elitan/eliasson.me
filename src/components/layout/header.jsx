@@ -7,6 +7,12 @@ export function Header() {
       <Link href="/">
         <a className="px-8">Home</a>
       </Link>
+      <Link href="/books">
+        <a className="px-8">Books</a>
+      </Link>
+      <Link href="/podcasts">
+        <a className="px-8">Podcasts</a>
+      </Link>
       <a className="px-8" href="https://twitter.com/elitasson">
         Twitter
       </a>
