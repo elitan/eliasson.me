@@ -7,6 +7,12 @@ export function Header() {
       <Link href="/">
         <a className="px-8">Home</a>
       </Link>
+      <Link href="/blog">
+        <a className="px-8">Blog</a>
+      </Link>
+      <Link href="/building">
+        <a className="px-8">Building</a>
+      </Link>
       <Link href="/books">
         <a className="px-8">Books</a>
       </Link>

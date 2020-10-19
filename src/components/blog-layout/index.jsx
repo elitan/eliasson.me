@@ -10,6 +10,7 @@ export default function BlogLayout({ children, frontMatter }) {
     author,
     twitter,
     image,
+    imageOriginal,
   } = frontMatter;
 
   const slug = frontMatter.__resourcePath
@@ -45,7 +46,7 @@ export default function BlogLayout({ children, frontMatter }) {
       </div>
 
       <div className="w-full flex justify-center py-12">
-        <img src={image} alt={title} />
+        <img src={imageOriginal} alt={title} style={{ width: "600px" }} />
       </div>
 
       <div className="container mx-auto prose px-4">{children}</div>
