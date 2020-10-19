@@ -17,6 +17,8 @@ export default function BlogLayout({ children, frontMatter }) {
     .replace(/.*pages\//, "")
     .replace(".mdx", "");
 
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+
   return (
     <div>
       <NextSeo
@@ -27,7 +29,7 @@ export default function BlogLayout({ children, frontMatter }) {
           title: title,
           description: description,
           cardType: "summary_large_image",
-          image: `https://eliasson.me${image}`,
+          image: `https://eliasson.me${image}?cache=${currentTimestamp}`,
           site: "elitasson",
           handle: twitter,
         }}
@@ -35,7 +37,12 @@ export default function BlogLayout({ children, frontMatter }) {
           url: `https://eliasson.me/blog${slug}`,
           title: title,
           description: description,
-          images: [{ url: `https://eliasson.me${image}`, alt: title }],
+          images: [
+            {
+              url: `https://eliasson.me${image}?cache=${currentTimestamp}`,
+              alt: title,
+            },
+          ],
           site_name: "Johan Eliasson",
         }}
       />
