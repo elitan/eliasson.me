@@ -1,24 +1,42 @@
 import { Layout } from "components/layout";
 
+const builds = [
+  {
+    name: "Nhost",
+    url: "https://nhost.io",
+    description:
+      "The Jamstack backend with Hasura. Better than Google Firebase.",
+  },
+  {
+    name: "GraphQL Stockholm",
+    url: "https://graphql.se",
+    description: "Meetup",
+  },
+  {
+    name: "Teamfind",
+    url: "https://teamfind.se",
+    description: "Recruitment system",
+  },
+];
+
 export default function Home() {
   return (
     <Layout>
       <div>Building</div>
 
-      <div className="italic text-3xl">Will update more soon!</div>
-
-      <div className="py-6">
-        <a href="https://nhost.io" className="text-lg text-semibold">
-          Nhost
-        </a>
-        <div className="py-2 text-gray-700">okok</div>
-      </div>
-      <div className="">
-        <a href="https://graphql.se">GraphQL.se Stockholm Meetup</a>
-      </div>
-      <div className="">
-        <a href="https://teamfind.se">Teamfind</a>
-      </div>
+      {builds.map((build) => {
+        return (
+          <div className="py-6">
+            <div className="mb-2">
+              <a href={build.url}>
+                <span className="text-2xl">{build.name}</span>
+                <span className="ml-2">{build.url}</span>
+              </a>
+            </div>
+            <div className="text-gray-700">{build.description}</div>
+          </div>
+        );
+      })}
     </Layout>
   );
 }

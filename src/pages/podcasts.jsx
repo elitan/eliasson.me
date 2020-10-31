@@ -1,12 +1,24 @@
-import Link from "next/link";
 import { Layout } from "components/layout";
 
+const podcasts = [
+  "Sam Harris",
+  "Eric Weinstein",
+  "Jocko Willink",
+  "Naval Ravikant",
+  "Joe Rogan",
+  "Scott Adams",
+  "Filip & Fredrik (Swedish)",
+];
 export default function Home() {
   return (
     <Layout>
-      <div>Podcasts I listen to.</div>
+      <div>Podcasts I enjoy listening to:</div>
 
-      <div>Coming soon...</div>
+      <ul>
+        {podcasts.map((podcast) => {
+          return <li className="py-1">{podcast}</li>;
+        })}
+      </ul>
     </Layout>
   );
 }
