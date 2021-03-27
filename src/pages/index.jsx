@@ -44,8 +44,6 @@ export default function Home() {
       <div className="text-xl font-semibold">Blog posts</div>
       <div className="">
         {blogPostsSorted.map((post) => {
-          console.log({ post });
-
           if ("draft" in post && post.draft) return null;
 
           const slug = post.__resourcePath
