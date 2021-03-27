@@ -3,6 +3,55 @@ import { Layout } from "components/layout";
 export default function Home() {
   const books = [
     {
+      title: `Atomic Habits: Tiny Changes, Remarkable Results`,
+      finishedReading: "2021",
+      author: {
+        name: "James Clear",
+      },
+    },
+    {
+      title: `The Great Mental Models: General Thinking Concepts`,
+      finishedReading: "2021",
+      author: {
+        name: "Shane Parrish",
+      },
+    },
+    {
+      title: `Competing Against Luck: The Story of Innovation and Customer Choice`,
+      finishedReading: "2021",
+      author: {
+        name: "Clayton M. Christensen",
+      },
+    },
+    {
+      title: `Animal Farm`,
+      finishedReading: "2021",
+      author: {
+        name: "George Orwell",
+      },
+    },
+    {
+      title: `Ignore Everybody: And 39 Other Keys to Creativity`,
+      finishedReading: "2021",
+      author: {
+        name: "Hugh MacLeod",
+      },
+    },
+    {
+      title: `Ålevangeliet`,
+      finishedReading: "2021",
+      author: {
+        name: "Patrik Svensson",
+      },
+    },
+    {
+      title: `The Hard Thing About Hard Things`,
+      finishedReading: "2021",
+      author: {
+        name: "Ben Horowitz",
+      },
+    },
+    {
       title: `Born to Run: A Hidden Tribe, Superathletes, and the Greatest Race the World Has Never Seen`,
       finishedReading: "2020",
       author: {
