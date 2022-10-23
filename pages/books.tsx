@@ -3,6 +3,55 @@ import type { NextPage } from 'next'
 
 const books = [
   {
+    title: `Shape Up. Stop Running in Circles and Ship Work that Matters`,
+    finishedReading: '2022',
+    author: {
+      name: 'Ryan Singer'
+    }
+  },
+  {
+    title: `Angel: How to Invest in Technology Startups`,
+    finishedReading: '2022',
+    author: {
+      name: 'Jason Calacanis'
+    }
+  },
+  {
+    title: `Ta betalt! : Hur pris påverkar allt`,
+    finishedReading: '2022',
+    author: {
+      name: 'Andreas Johansson'
+    }
+  },
+  {
+    title: `80/20 Running`,
+    finishedReading: '2022',
+    author: {
+      name: 'Matt Fitzgerald'
+    }
+  },
+  {
+    title: `Bad Blood`,
+    finishedReading: '2022',
+    author: {
+      name: 'John Carreyrou'
+    }
+  },
+  {
+    title: `Marketing Made Simple`,
+    finishedReading: '2022',
+    author: {
+      name: 'Donald Miller'
+    }
+  },
+  {
+    title: `Building a StoryBrand`,
+    finishedReading: '2022',
+    author: {
+      name: 'Donald Miller'
+    }
+  },
+  {
     title: `Atomic Habits: Tiny Changes, Remarkable Results`,
     finishedReading: '2021',
     author: {
@@ -28,6 +77,13 @@ const books = [
     finishedReading: '2021',
     author: {
       name: 'George Orwell'
+    }
+  },
+  {
+    title: `The Mom Test: How to talk to customers and learn if your business is a good idea when everyone is lying to you`,
+    finishedReading: '2021',
+    author: {
+      name: 'Rob Fitzpatrick'
     }
   },
   {
