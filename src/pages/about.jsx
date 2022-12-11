@@ -64,7 +64,7 @@ export default function About() {
               I'm Johan Eliasson. I live in Sweden, where I work on Nhost.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-              <p>Coming soon...</p>
+              <p>Engineer, entreprenur, runner.</p>
             </div>
           </div>
           <div className="lg:pl-20">

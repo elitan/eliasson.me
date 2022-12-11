@@ -4,14 +4,32 @@ import Head from 'next/head'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoNhost from '@/images/logos/nhost.svg'
+import aquagruppenLogo from '@/images/logos/aquagruppen.svg'
+import doedLogo from '@/images/logos/doed.svg'
 
 const projects = [
   {
     name: 'Nhost',
     description:
-      'An Open-Source Firebase Alternative and Backend-as-a-Service.',
+      'Co-Founder & CEO: An Open-Source Firebase Alternative and Backend-as-a-Service.',
     link: { href: 'http://nhost.io', label: 'nhost.io' },
     logo: logoNhost,
+  },
+  {
+    name: 'AquaGruppen',
+    description:
+      'Entrepreneur (Family Business): Water filters for Swedish home owners.',
+    link: { href: 'http://aquagruppen.se', label: 'aquagruppen.se' },
+    logo: aquagruppenLogo,
+  },
+  {
+    name: 'Doed',
+    description: 'Founder: Swedish StarCraft 2 League',
+    link: {
+      href: 'https://www.twitch.tv/doedleague',
+      label: 'doed.se',
+    },
+    logo: doedLogo,
   },
 ]
 
@@ -50,7 +68,7 @@ export default function Projects() {
                 <Image
                   src={project.logo}
                   alt=""
-                  className="h-6 w-6"
+                  className="h-7 w-7"
                   unoptimized
                 />
               </div>
