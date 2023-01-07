@@ -1,0 +1,22 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+export const meta = {
+  author: 'Johan Eliasson',
+  date: '2023-01-07',
+  title:
+    'What are the differences between the JSON and JSONB data types in PostgreSQL?',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+In PostgreSQL, the JSON and JSONB data types are used to store JSON (JavaScript Object Notation) data. JSON is a text-based data interchange format that is lightweight and easy for humans to read and write, and easy for machines to parse and generate.
+
+The main difference between JSON and JSONB is that JSONB stores data in a binary format, while JSON stores data as simple text. This means that JSONB is more efficient and faster to process than JSON, because it doesn't have to be parsed from a text representation. JSONB also supports additional operations, such as indexing and searching, which are not available for JSON.
+
+Here are a few examples of things you can do with JSONB, but not with JSON:
+
+- **Indexing:** You can create indexes on JSONB data to improve search performance. This is not possible with JSON.
+- **Searching:** You can use the ->, ->>, and #> operators to search JSONB data. These operators are not available for JSON.
+- **Modification:** You can use the || operator to concatenate JSONB values, and the - operator to remove key/value pairs from a JSONB object. These operators are not supported for JSON.
+- **Statistical functions:** JSONB provides several statistical functions, such as jsonb_object_keys, which returns the keys of a JSONB object as a set, and jsonb_array_length, which returns the length of a JSONB array. These functions are not available for JSON.
+
+Overall, JSONB is generally a better choice for storing JSON data in PostgreSQL, because it is more efficient and flexible. However, if you only need to store and retrieve JSON data and don't need any of the additional features provided by JSONB, you can use the JSON data type.
