@@ -1,0 +1,280 @@
+import Image from 'next/image'
+import prismaTypesafeDatabasClient from './typesafe-database-client.svg'
+import kyselyDemo from './kysely-demo.gif'
+
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'Johan Eliasson',
+  date: '2023-03-31',
+  title:
+    'Crafting the Perfect T3 Stack: My Journey with Kysely, Atlas, and Clerk',
+  description: '',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The [`Create T3 App`](https://create.t3.gg/) has become increasingly popular among developers as a go-to solution for building full-stack, typesafe applications with Next.js. By providing a combination of tools such as Next.js, Prisma, TypeScript, Tailwind CSS, tRPC, and NextAuth.js, the T3 stack streamlines the setup of modern web apps.
+
+As someone who naturally enjoys tinkering with technology and prefers tools that can be customized to fit my needs, I have found that all-in-one solutions like T3 can sometimes become too opinionated as they attempt to consolidate multiple tools into a single package.
+
+As much as I've enjoyed working with T3, there are certain components of the stack that do not align with my preferences. More specifically, I have had issues with Prisma and NextAuth.js.
+
+In this post, I will detail my reasoning for disliking Prisma and NextAuth.js and how I have replaced them with my preferred alternatives - [Kysely](https://github.com/kysely-org/kysely), [Atlas](https://github.com/ariga/atlas), and [Clerk](https://clerk.com). By sharing my experience, I hope to provide insight into the benefits and drawbacks of different tools and help others make informed decisions when building their own tech stacks.
+
+## Kysely is Prisma done right - or why I don't like Prisma
+
+The reason for my dissatisfaction with Prisma is that it does not use the actual database schema as the source of truth. Instead, Prisma relies on its own schema as the source of truth, which introduces an additional abstraction layer between the Prisma schema and the database schema. While abstractions can be helpful, it is important that they are implemented thoughtfully and in a way that makes sense.
+
+Let's look at two schema definitions. One in Prisma and one in SQL.
+
+### Prisma Schema Definition
+
+```
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(false)
+  title     String   @db.VarChar(255)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+```
+
+### SQL schema definition
+
+```sql
+CREATE TABLE "User" (
+    "id" SERIAL PRIMARY KEY,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" VARCHAR(255) UNIQUE NOT NULL,
+    "name" VARCHAR(255),
+    "role" VARCHAR(255) NOT NULL DEFAULT 'USER',
+);
+
+CREATE TABLE "Post" (
+    "id" SERIAL PRIMARY KEY,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "title" VARCHAR(255) NOT NULL,
+    "authorId" INT,
+    FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL
+);
+
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+ALTER TABLE "User" ALTER COLUMN "role" TYPE "Role" USING "role"::text::"Role";
+```
+
+The SQL schema definition is not only shorter, but it is also universally understood by all develoeprs that has worked with databases. In contrast, Prisma's schema is a custom schema that, while intuitive and somewhat popular, is not as widely adopted as SQL.
+
+As a developer, it is crucial to have the ability to create schema definitions in SQL, as it is the industry standard for most applications. Relying solely on the "Prisma way" of defining schemas may cause you to overlook important details about the underlying data schema, which could ultimately limit your development capabilities in the long run. Additionally, Prisma may not support all the functionalities that you require in certain situations, as it is not as powerful as SQL.
+
+Despite this, Prisma has gained popularity due to its TypeScript ORM capabilities. Prisma generates TypeScript definitions and creates a Prisma Client, which simplifies database interaction for developers.
+
+Here's an image from [Prisma's website](https://www.prisma.io/) to illustrate the TypeScript ORM.
+
+<Image src={prismaTypesafeDatabasClient} alt="" />
+
+While the Prisma Client is a valuable tool for boosting developer productivity, it does require a Prisma Schema. Personally, I have concerns about the usefulness of the additional abstraction layer that the Prisma Schema creates.
+
+This led me to consider alternative approaches that could offer the same level of developer experience as the Prisma Client, while avoiding the unnecessary abstractions of the Prisma Schema.
+
+These were my specified criteria:
+
+1. SQL is required as the database schema.
+2. Declarative schema should be used to handle database migrations.
+3. A type-safe TypeScript client should be generated directly from the database.
+
+And here is the TLDR:
+
+Point **1** and **2** is solved by [Atlas](https://github.com/ariga/atlas).
+
+Point **3** is solved by [Kysely](https://github.com/kysely-org/kysely) and [Kysely Codegen](https://github.com/RobinBlomberg/kysely-codegen).
+
+Let me explain how.
+
+## What is Kysely and Atlas?
+
+### Atlas: A modern tool for managing database schemas
+
+[Atlas](https://github.com/ariga/atlas) is a new tool for managing database schemas. What's cool about Atlas is that they do this in a declerative way.
+
+Here's how it works: you have a SQL file, let's call it db.sql, where you write your database schema. Whenever you make a change to the database schema, such as adding a table, changing a column, or removing an index, Atlas generates a migration plan to reflect those changes. Essentially, it analyzes both your database and the db.sql file, and determines which SQL statements need to be executed to apply the changes from db.sql to your database.
+
+To illustrate this process, let's consider an example. Suppose you have a cats table defined in your db.sql, and that this cats table already exists in your database. In this case, everything is functioning as expected.
+
+```sql
+CREATE TABLE cats (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+```
+
+Suppose you want to add a new column called `age` to the `cats` table. To make this change, you would update your `db.sql` file to include the new column definition:
+
+```sql
+CREATE TABLE cats (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  age INTEGER NOT NULL
+);
+```
+
+Now run Atlas:
+
+```
+atlas schema apply \
+  -u "postgres://postgres:password@:5432/postgres?sslmode=disable" \
+  --to file://db.sql \
+  --dev-url "docker://postgres/15/test"
+
+-- Planned Changes:
+-- Modify "cats" table
+ALTER TABLE "public"."cats" ADD COLUMN "age" integer NOT NULL;
+Use the arrow keys to navigate: ↓ ↑ → ←
+? Are you sure?:
+  ▸ Apply
+    Abort
+```
+
+As you can see, Atlas is able to determine which SQL statement needs to be executed to synchronize the `db.sql` file with the current database schema.
+
+This allows for a declarative representation of your database schema in SQL, as well as a seamless method for managing database schema migrations. All without having to use a custom Prisma Migration format.
+
+With the database management taken care of, let's now turn our attention to the TypeScript client.
+
+### Kysely: A type-safe typescript SQL query builder
+
+[Kysely](https://github.com/kysely-org/kysely) is a type-safe and autocompletion-friendly typescript SQL query builder. Here's is a demo of how Kysely works:
+
+<Image src={kyselyDemo} alt="" />
+
+However, there is one problem with Kysely as noted in their [README](https://github.com/kysely-org/kysely#minimal-example) file:
+
+> All you need to do is define an interface for each table in the database and pass those interfaces to the Kysely constructor:
+
+Wait what? You're telling me I need to define all types my self? That's work I absolutely don't want to do.
+
+Lukly, a guy named [Robin Blomberg](https://github.com/RobinBlomberg) felt the same and wrote a codegen tool for Kyseley called [Kysely Codegen](https://github.com/RobinBlomberg/kysely-codegen).
+
+### Database: snake_case. JavaScript: camelCase
+
+One problem is that the convention is to use snake_case in SQL but camelCase in JavaScript. This means that a column like `full_name` in the database will be available at `user.full_name` in JavaScript whereas you would ideally want to use `name.fullName` in JavaScript.
+
+This is solved by a [Kysely Camel Case Plugin](https://github.com/kysely-org/kysely/tree/master/src/plugin/camel-case) which is also [supported](https://github.com/RobinBlomberg/kysely-codegen/pull/15) in Kysely Codegen and easy to configure.
+
+```ts
+import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely'
+import { type DB } from './kysely-types'
+import { Pool } from 'pg'
+
+const db = new Kysely<DB>({
+  dialect: new PostgresDialect({
+    pool: new Pool({
+      connectionString: process.env.DATABASE_URL,
+    }),
+  }),
+  plugins: [new CamelCasePlugin()],
+})
+```
+
+This is how I've added `codegen` as a `script` in my `package.json` file:
+
+```json
+{
+  //...
+  "scripts": {
+    //...
+    "codegen": "kysely-codegen --dialect postgres --camel-case --out-file ./src/utils/kysely-types.d.ts"
+  }
+  //...
+}
+```
+
+Now that Atlas, Kysely, and Kysely Codegen, the process of going from a database change to a type-safe TypeScript client has been simplified into a two-step process. This means that I can work with SQL directly, rather than using Prisma.
+
+All SQL and TypeScript, without custom Prisma abstractions. Huge win!
+
+## Clerk for Authentication
+
+[Clerk](https://clerk.com/) provides complete user management UIs and APIs,
+purpose-built for React and Next.js.
+
+It's an amazing tool that has taken the concept of [Stripe Checkout](https://stripe.com/en-gb-se/payments/checkout) and [Stripe Customer Portal](https://stripe.com/docs/customer-management) which are pre-built UIs, provided by Stripe, that's easy to integrate for developers in their app.
+
+Clerk does the same, but for authentication. They provide easy to use UIs for things like [sign-up](https://clerk.com/docs/component-reference/sign-up), [sign-in](https://clerk.com/docs/component-reference/sign-in), [user button](https://clerk.com/docs/component-reference/user-button) and more.
+
+The focus on providing UI components for standardize authentication flows saves time and effort implementing already "solved" authentication problems.
+
+Unfortunately, Clerk is not open source but they provide a [generous free tier](https://clerk.com/pricing).
+
+Since Clerk is so focused on React and Next.js, it's easy to implement in the T3 stack. Here's my `_app.tsx` file with Clerk configured (with [Swedish localization](https://github.com/clerkinc/javascript/pull/983)).
+
+```js
+import { ClerkProvider } from '@clerk/nextjs'
+import { svSE } from '@clerk/localizations'
+import { type AppType } from 'next/app'
+
+import { api } from '~/utils/api'
+
+import '~/styles/globals.css'
+import { Layout } from '~/components/Layout/Layout'
+
+const MyApp: AppType = ({ Component, pageProps }) => {
+  return (
+    <ClerkProvider localization={svSE} {...pageProps}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ClerkProvider>
+  )
+}
+
+export default api.withTRPC(MyApp)
+```
+
+My `page/login.tsx` file is simple this:
+
+```js
+import { SignIn } from '@clerk/nextjs'
+function Page() {
+  return (
+    <div className="my-12 flex justify-center">
+      <SignIn signUpUrl="/register" />
+    </div>
+  )
+}
+
+export default Page
+```
+
+I think you can guss how my `page/register.tsx` file look like.
+
+And I can protect any part of my application with the [`<SignedIn />`](https://clerk.com/docs/component-reference/signed-in) component from Clerk.
+
+Thanks for reading.
