@@ -8,15 +8,26 @@ export const meta = {
 
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
-In PostgreSQL, the JSON and JSONB data types are used to store JSON (JavaScript Object Notation) data. JSON is a text-based data interchange format that is lightweight and easy for humans to read and write, and easy for machines to parse and generate.
+In PostgreSQL, both JSON and JSONB are data types used for storing JSON (JavaScript Object Notation) data. However, they have some differences in terms of storage, performance, and querying capabilities:
 
-The main difference between JSON and JSONB is that JSONB stores data in a binary format, while JSON stores data as simple text. This means that JSONB is more efficient and faster to process than JSON, because it doesn't have to be parsed from a text representation. JSONB also supports additional operations, such as indexing and searching, which are not available for JSON.
+## Storage:
 
-Here are a few examples of things you can do with JSONB, but not with JSON:
+- **JSON**: The JSON data type stores JSON data as plain text, preserving the exact formatting and structure of the original input. This means that any white spaces or indentation in the input JSON will be kept when storing the data in the JSON column.
+- **JSONB**: The JSONB data type stores JSON data in a binary format, which allows for more efficient storage and querying. White spaces, indentation, and the original order of keys are not preserved in the binary representation. When you retrieve JSONB data, the key-value pairs might be returned in a different order than the original input.
 
-- **Indexing:** You can create indexes on JSONB data to improve search performance. This is not possible with JSON.
-- **Searching:** You can use the ->, ->>, and #> operators to search JSONB data. These operators are not available for JSON.
-- **Modification:** You can use the || operator to concatenate JSONB values, and the - operator to remove key/value pairs from a JSONB object. These operators are not supported for JSON.
-- **Statistical functions:** JSONB provides several statistical functions, such as jsonb_object_keys, which returns the keys of a JSONB object as a set, and jsonb_array_length, which returns the length of a JSONB array. These functions are not available for JSON.
+## Performance:
 
-Overall, JSONB is generally a better choice for storing JSON data in PostgreSQL, because it is more efficient and flexible. However, if you only need to store and retrieve JSON data and don't need any of the additional features provided by JSONB, you can use the JSON data type.
+- **JSON**: Since JSON data is stored as text, parsing is required every time you query the data, which can lead to slower query performance. However, JSON data type has faster input performance as it doesn't need any conversion or processing during the insertion.
+- **JSONB**: The binary format of JSONB data enables more efficient querying, as the data is already parsed and can be queried using specialized operators and functions. The downside is that JSONB has a slightly slower input performance due to the additional processing required during insertion.
+
+## Querying capabilities:
+
+- **JSON**: The JSON data type provides a limited set of operators and functions for querying the data. You can query the JSON data using basic operators like -> and ->>, but complex queries may require manual parsing and manipulation.
+- **JSONB**: The JSONB data type comes with a more extensive set of operators and functions, allowing you to perform advanced queries and manipulations on the data. JSONB supports additional operators like `@>`, `<@`, `?`, `?|`, and `?&` for containment, existence, and other operations.
+
+## Indexing:
+
+- **JSON**: Indexing is limited for the JSON data type in PostgreSQL. You can create functional indexes using specific functions like json_extract_path_text and json_extract_path, but this may not be as efficient as indexing in JSONB.
+- **JSONB**: JSONB supports advanced indexing using Generalized Inverted Indexes (GIN) and Generalized Search Tree (GiST) indexes, which can improve the performance of complex queries on JSONB columns.
+
+In summary, JSONB is generally preferred over JSON for most use cases due to its more efficient storage, better query performance, and advanced querying capabilities. However, if you require preserving the exact input formatting or need slightly faster input performance, JSON might be a suitable choice.
