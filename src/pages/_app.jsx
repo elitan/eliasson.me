@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 
 import '@/styles/tailwind.css'
 import 'focus-visible'
+import PlausibleProvider from 'next-plausible'
 
 function usePrevious(value) {
   let ref = useRef()
@@ -20,7 +21,12 @@ export default function App({ Component, pageProps, router }) {
   let previousPathname = usePrevious(router.pathname)
 
   return (
-    <>
+    <PlausibleProvider
+      domain="eliasson.me"
+      customDomain="https://analytics.eliasson.me"
+      selfHosted={true}
+      enabled={true}
+    >
       <div className="fixed inset-0 flex justify-center sm:px-8">
         <div className="flex w-full max-w-7xl lg:px-8">
           <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
@@ -33,6 +39,6 @@ export default function App({ Component, pageProps, router }) {
         </main>
         <Footer />
       </div>
-    </>
+    </PlausibleProvider>
   )
 }
