@@ -42,6 +42,13 @@ export default function Speaking() {
         <div className="space-y-20">
           <SpeakingSection title="Conferences">
             <Appearance
+              href="https://tinius.com/2023/09/07/slik-bruker-de-ai-i-redaksjonene/#:~:text=%C2%ABHow%20I%20built%20a%20fully%20automated%20news%20website%20using%20AI.%C2%BB"
+              title="How I built a fully automated news website using AI"
+              description="Johan Eliasson is an engineer, hacker, and entrepreneur. Although he is not affiliated with the media industry, he is currently working as the Chief Technology Officer (CTO) at OneLab. Before joining OneLab, he was the Chief Executive Officer (CEO) at Nhost, where he developed infrastructure tools for developers. In a short period of time, he created his own English-language news service (nyheter.sh) with machine-generated illustration images, based on the sound from Sweden's Radio news broadcasts, artificial intelligence, a handful of prompts—and significant developer skills."
+              event="AI Breakfast, Oslo"
+              cta="Watch video"
+            />
+            <Appearance
               href="https://www.youtube.com/watch?v=Q1wWcOrKYL8"
               title="GraphQL for Web and Mobile Apps Made Simple"
               description="Building web and mobile apps with GraphQL should be simple. With Nhost, developers build web and mobile apps with automatically generated GraphQL APIs. In this talk, we'll show you how this is ideal for developers who want to boost productivity without worrying about infrastructure."

@@ -92,13 +92,18 @@ export default function Page({ articles }) {
             </div>
           </div>
           <div className="lg:order-first lg:row-span-2">
-            <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-              I'm Johan, CTO at <a href="https://onelab.se">OneLab</a> and indie
-              hacker.
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-4xl">
+              I'm Johan, CTO at <a href="https://onelab.se">OneLab</a>, software
+              engineer, indie hacker, and aspiring elite runner.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-              <p>Engineer, entreprenur, runner.</p>
+              <p>
+                Exploiting regularities and decreasing local entropy to my
+                benefit.
+              </p>
             </div>
+
+            <div className="border-b border-gray-800 pt-12" />
 
             <div className="flex flex-col gap-16 pt-16">
               {articles.map((article) => (
