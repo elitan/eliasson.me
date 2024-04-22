@@ -1,0 +1,38 @@
+import Image from "next/image";
+import prismaTypesafeDatabasClient from "./typesafe-database-client.svg";
+import kyselyDemo from "./kysely-demo.gif";
+
+import { ArticleLayout } from "@/components/ArticleLayout";
+
+export const meta = {
+  author: "Johan Eliasson",
+  date: "2023-04-21",
+  title: "Simple",
+  description: "",
+};
+
+export default (props) => <ArticleLayout meta={meta} {...props} />;
+
+## Examples
+
+### Tesla
+
+Look inside a Tesla cocpit and compare it to this BMW.
+
+- Tesla was one of the most popular cars in EU and US 2023.
+- They've largely removed things compared to old cars
+
+- They have removed xxx NR of moving parts due to their electric motor
+- They have removed almost everything inside the cocpit
+
+### Apple
+
+Apple is regocnized for their minimal design.
+
+Compare phones pre iPhone and you'll find that the Apple largely removed a lot of things to make the phone simpler.
+
+### Google
+
+- Show a search box to the user
+- The user typs a search query and click enter
+- Show 10 blue links to relevant websites to the user
