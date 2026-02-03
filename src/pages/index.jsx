@@ -4,6 +4,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 import { Card } from '@/components/Card'
 import { getAllArticles } from '@/lib/getAllArticles'
+import { generateRssFeed } from '@/lib/generateRssFeed'
 import { formatDate } from '@/lib/formatDate'
 
 import { Container } from '@/components/Container'
