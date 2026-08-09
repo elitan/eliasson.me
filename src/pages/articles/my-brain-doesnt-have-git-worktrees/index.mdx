@@ -1,0 +1,113 @@
+import { ArticleLayout } from "@/components/ArticleLayout";
+
+export const meta = {
+  author: "Johan Eliasson",
+  date: "2026-08-09",
+  title: "My Brain Doesn’t Have Git Worktrees",
+  description:
+    "How I made it easy to run eight coding agents at once—and discovered that my attention was the next bottleneck.",
+};
+
+export default function Article(props) {
+  return <ArticleLayout meta={meta} {...props} />;
+}
+
+A year ago, using a coding agent still meant sitting beside it. I gave the agent a task, watched its progress, corrected it when it drifted, and waited for the result.
+
+That has changed. For many tasks, I can now describe a problem and walk away. Five or fifteen minutes later, the agent often returns with work ready for review.
+
+This changes more than the code agents produce. It changes what I can do while they produce it. Instead of watching one agent, I can start another—and then another.
+
+Once agents could work on their own, running them in parallel became useful. I quickly discovered that my development setup had been built around one developer doing one thing at a time.
+
+So I redesigned it.
+
+## From one agent to many
+
+I didn't jump straight to eight threads. I started with Claude Code in the terminal, one repository, and one CLI session. As the agents needed less supervision, I wanted to start a second task before the first had finished.
+
+My first solution was simple: I cloned the repository into three folders and called them A, B, and C. Each had its own terminal tab, Claude Code session, dev server port, and Neon database branch that I could reset when I wanted to start fresh.
+
+It worked surprisingly well, but there was a lot to remember. A was building a feature, B was fixing a bug, and C was doing something else. When B finished, I might reuse the folder for a new task, and B suddenly meant something different.
+
+There was no clear way to see when an agent needed my attention, so I kept checking the terminal tabs. Finishing a task meant stopping the session, resetting the database branch, cleaning the folder, and preparing it for the next task.
+
+The browser added another layer. A, B, and C ran on different ports, but their pages opened as tabs in the same browser. To test B's work, I had to remember both its localhost port and its browser tab.
+
+None of this was hard. That was almost the problem. Each step was easy enough to accept, but together they kept pulling me away from the work itself. Adding D meant creating and managing another little world.
+
+**The cost of starting another agent wasn't the agent. It was everything around it.**
+
+## The thread became the workspace
+
+Moving more of my work into Codex let me rethink the model. A thread no longer had to be a conversation inside a workspace. The thread could be the workspace.
+
+The idea is simple:
+
+```text
+Thread
+├── Worktree
+├── App config
+├── Dev server
+├── Database branch
+├── Terminal
+└── Browser
+```
+
+Every new thread gets this whole structure. I shouldn't have to build it myself by creating a worktree, choosing a port, resetting a database, or matching the task to the right browser tab.
+
+I should create a thread. That's the interface.
+
+## Making threads disposable
+
+Codex can run setup code whenever it creates a thread. I use it to give each new thread a Git worktree and the configuration the app needs. The dev command picks a free port, so several copies of the app can run at once.
+
+Each thread also gets its own database branch. Neon creates it in seconds and can mask sensitive data along the way. The agent gets a realistic database to work with, while its changes stay isolated from production and every other thread.
+
+These tools aren't new. Git worktrees, dynamic ports, and database branches have existed for years. The important change was making them automatic instead of something I had to remember.
+
+I no longer need a setup routine before starting another task. Codex prepares the thread for me.
+
+## The browser is part of the context
+
+I underestimated how much it mattered to tie the browser and terminal to the thread. It solved a small problem from my A/B/C setup that became annoying when repeated all day.
+
+A thread contains more than Feature A's conversation. It contains its code, database, dev server, terminal, and browser. When I switch to Feature B, I switch to B's thread and everything attached to it. When I return to A, everything is where I left it.
+
+I no longer have to remember B's port or hunt for its Chrome tab. Switching tasks already has a cost; the tools shouldn't add to it.
+
+With one agent, a thread can be a conversation.
+
+With several agents, the thread needs to be a workspace.
+
+## Starting another task costs almost nothing
+
+This changed my behavior more than I expected. If one agent is working and I see another problem, I can open a new thread. Seconds later, the new thread is ready.
+
+I often have four to eight threads open, though they aren't all coding at once. One may be building a feature, another investigating a bug, a third waiting for review, and a fourth halfway through a refactor. I move between them, answering questions and reviewing work as it returns.
+
+Technically, this works remarkably well. But the old friction had also acted as a filter. Before creating another clone, port, database branch, and browser tab, I had to decide that a task was worth the trouble.
+
+Once Codex created all of that for me, the filter disappeared. Starting work became almost free, but reviewing and finishing it did not. Every new thread created work that would eventually return to me.
+
+Starting became cheap. Finishing did not.
+
+## The part that doesn't scale
+
+I can run eight isolated Codex threads. I cannot think about eight engineering problems in parallel.
+
+This happened one morning while I was working on Track, our recruitment platform for [Gazella](https://gazella.se). One thread was changing an email flow, another was improving search, and a third was waiting for review. The tasks were unrelated, but each would eventually come back with a question or a decision.
+
+Each thread preserved its code, database, terminal, and browser exactly as I left them. What it couldn't preserve was my understanding. When a thread returned, I had to remember the goal, the constraints, the chosen approach, and the decision still waiting for me.
+
+Returning wasn't resuming. I was leaving one mental model and rebuilding another.
+
+Agents don't remove this human limit. They expose it.
+
+I feel that limit when too many threads compete for attention. My work fragments. I spend more time rebuilding context while finished threads wait for decisions. What first felt like leverage starts to feel exhausting.
+
+I removed the cost of giving each agent its own world. I hadn't removed the cost of carrying those worlds in my head.
+
+The old setup limited me by accident. Now I need to set that limit myself. Before starting another thread, I need to ask not only whether the agent can do the work, but whether I have the attention to review it, make the remaining decisions, and finish it.
+
+The agents can work in parallel. I still have to finish one thought at a time.
