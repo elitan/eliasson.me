@@ -9,7 +9,7 @@ import { formatDate } from '@/lib/formatDate'
 
 import { Container } from '@/components/Container'
 import {
-  TwitterIcon,
+  XIcon,
   InstagramIcon,
   GitHubIcon,
   LinkedInIcon,
@@ -77,7 +77,7 @@ export default function Page({ articles }) {
         <title>Johan Eliasson</title>
         <meta
           name="description"
-          content="I'm Johan Eliasson. I live in Sweden, Spencer Sharp. I live in New York City, where I design the future."
+          content="Johan Eliasson is CTO at Gazella in Stockholm, building practical software, data, and AI products."
         />
       </Head>
       <Container className="mt-16 sm:mt-32">
@@ -94,13 +94,15 @@ export default function Page({ articles }) {
           </div>
           <div className="lg:order-first lg:row-span-2">
             <h1 className="text-3xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-4xl">
-              I'm Johan, CTO at <a href="https://onelab.se">OneLab</a>, software
+              I'm Johan, CTO at <a href="https://gazella.se">Gazella</a>, software
               engineer, indie hacker, and aspiring elite runner.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
               <p>
-                Exploiting regularities and decreasing local entropy to my
-                benefit.
+                I build practical products at the intersection of software,
+                data, and AI—from job matching with embeddings to automated
+                news pipelines. I&apos;m always looking for regularities to exploit
+                and local entropy to decrease.
               </p>
             </div>
 
@@ -115,10 +117,10 @@ export default function Page({ articles }) {
           <div className="lg:pl-20">
             <ul role="list">
               <SocialLink
-                href="https://twitter.com/elitasson"
-                icon={TwitterIcon}
+                href="https://x.com/elitasson"
+                icon={XIcon}
               >
-                Follow on Twitter
+                Follow on X
               </SocialLink>
               <SocialLink
                 href="https://github.com/elitan"
@@ -128,7 +130,7 @@ export default function Page({ articles }) {
                 Follow on GitHub
               </SocialLink>
               <SocialLink
-                href="https://www.linkedin.com/in/johan--eliasson/"
+                href="https://www.linkedin.com/in/j4e/"
                 icon={LinkedInIcon}
                 className="mt-4"
               >
