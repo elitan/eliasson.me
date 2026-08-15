@@ -1,0 +1,95 @@
+import { ArticleLayout } from "@/components/ArticleLayout";
+
+export const meta = {
+  author: "Johan Eliasson",
+  date: "2026-08-17",
+  title: "The Artifact Is No Longer Proof of Competence",
+  description:
+    "The artifact still matters. It just can't carry the whole signal anymore.",
+};
+
+export default function Article(props) {
+  return <ArticleLayout meta={meta} {...props} />;
+}
+
+There is an idea called **Gell-Mann Amnesia**.
+
+You read a news article about a subject you know well and immediately notice the gaps. The journalist misunderstood something basic. Important context is missing. Some conclusions don't follow.
+
+Then you turn the page, read about something you know nothing about, and trust the journalist again.
+
+I think AI creates a similar problem.
+
+Ask AI to work in a field you don't understand and the result can look incredible. I could ask it to draft a legal document and it would probably look professional to me. It would use language I associate with lawyers. The structure would look right. I might read it and think: this is amazing.
+
+But I would be a terrible judge of whether it actually was.
+
+With software, I have the opposite experience. I can see when the AI chose a strange abstraction, missed an edge case or solved the wrong problem. I can also see when it did a genuinely great job. And increasingly, it does, especially when someone who understands the domain gives it good context, steers it in the right direction and knows when to push back.
+
+That creates a problem I find more interesting than whether AI is good or bad at knowledge work.
+
+## The artifact is becoming a weaker signal
+
+Before AI, there was a fairly strong connection between being able to produce something and understanding how to produce it.
+
+If someone handed you a well-written essay, that told you something about their ability to write and think. If a developer built a good application, they probably knew quite a lot about software development. If someone produced a thoughtful analysis of a business, you could infer at least some understanding from the analysis itself.
+
+None of these signals were perfect. People have always had editors, colleagues, templates and Google. But producing good work still required quite a lot of the skill that the finished work appeared to demonstrate.
+
+AI weakens that connection.
+
+Two people can now produce almost identical artifacts while having completely different levels of understanding. One person might know the field deeply. They gave the AI the right context, rejected three bad approaches, noticed what was missing and kept iterating until the result was good. Another person might have written one prompt and accepted the answer.
+
+Looking only at the final artifact, it can be hard to tell which one you're looking at.
+
+I've seen a small version of this with software engineers using AI. The code looked reasonable, but when I started asking why it had been structured in a certain way, why a particular library had been chosen or what alternatives had been considered, the answer eventually became some version of:
+
+**"The AI did it."**
+
+The code itself wasn't necessarily bad. The problem was that I had learned much less about the engineer by looking at it than I would have a few years ago.
+
+## This matters anywhere we use output as a signal
+
+Education is an obvious example.
+
+A student writes an essay. We grade the essay and use it as evidence that they understand the subject. A developer completes a take-home assignment and we inspect the code to estimate how good they are. A candidate sends us a thoughtful case study and we assume the thinking in the document tells us something about the person.
+
+Those assumptions are getting weaker.
+
+The same applies inside companies. Someone writes a great strategy document, creates an impressive analysis or ships a complicated feature. The work may be excellent and create real value. That should count.
+
+But if you're trying to judge the competence of the person behind it, the artifact no longer tells you as much as it used to.
+
+This distinction matters because AI can hide both strong and weak judgment.
+
+Someone with deep domain knowledge can use AI to produce something far beyond what they could have built alone. That's a feature, not a problem. The interesting part is that the finished result doesn't tell you how much judgment went into producing it.
+
+## Show your work
+
+This keeps making me think of math exams.
+
+Getting the final answer right wasn't always enough. You had to show how you got there because the steps showed whether you understood the problem.
+
+We may need a version of that for AI work.
+
+Sometimes that could mean looking at the actual process. Where did you start? What did you ask the AI? What did you reject? What changed along the way? Where did the model take you in the wrong direction?
+
+I have mixed feelings about making people hand over their entire AI conversations. Prompt threads can contain half-formed thoughts, sensitive information and plenty of things that were never meant to become part of the final work.
+
+So **"show your work" doesn't have to mean "show me your chat history."**
+
+You can learn a lot by talking to the person instead. Ask why they chose the approach, what the tradeoffs were, which part they trust least, what they would change if one of the constraints changed, or where they thought the AI was wrong.
+
+Those questions get closer to the thing the artifact used to tell us automatically.
+
+## What are we actually trying to measure?
+
+As AI gets better, more of the production can be outsourced. You may not need ten years of practice to produce something that looks like the work of someone with ten years of practice.
+
+That doesn't make expertise irrelevant. It makes it harder to see.
+
+The skill may increasingly sit in choosing the right problem, giving the AI the right foundation, noticing what's missing, judging between several plausible answers and knowing when the result is good enough.
+
+If we want to evaluate competence, we need to get closer to that judgment instead of assuming the finished output proves it exists.
+
+**The artifact still matters. It just can't carry the whole signal anymore.**
